@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="430" viewBox="0 0 960 430" font-family="Microsoft JhengHei, Noto Sans CJK TC, PingFang TC, sans-serif" font-size="13">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#555"/></marker>
+  </defs>
+  <rect width="960" height="430" fill="#fff"/>
+
+  <!-- 流程 -->
+  <text x="20" y="28" font-size="15" font-weight="bold" fill="#222">流程</text>
+  <g stroke="#555" stroke-width="1.5" fill="#f4f6f8">
+    <rect x="20" y="45" width="90" height="46" rx="6"/>
+    <rect x="170" y="45" width="120" height="46" rx="6"/>
+    <rect x="350" y="45" width="110" height="46" rx="6"/>
+    <rect x="520" y="45" width="130" height="46" rx="6"/>
+  </g>
+  <g text-anchor="middle" fill="#222">
+    <text x="65" y="64">客戶圖</text><text x="65" y="82" fill="#666">.dwg</text>
+    <text x="230" y="64">dwg2nc.py</text><text x="230" y="82" fill="#666">認孔、串輪廓、配刀</text>
+    <text x="405" y="64">四個檔</text><text x="405" y="82" fill="#666">.nc .csv .json .md</text>
+    <text x="585" y="64">銑床預演台</text><text x="585" y="82" fill="#666">三個檔各自拖進去</text>
+  </g>
+  <g stroke="#555" stroke-width="1.5" fill="none" marker-end="url(#a)">
+    <path d="M110,68 L168,68"/><path d="M290,68 L348,68"/><path d="M460,68 L518,68"/>
+  </g>
+  <text x="170" y="112" fill="#666">現有刀具表 .csv ↑ 只從這裡配刀，缺的標「需新增」</text>
+
+  <!-- 認得的特徵：板的示意 -->
+  <text x="20" y="150" font-size="15" font-weight="bold" fill="#222">認得的特徵（2.5D，從上面一次裝夾）</text>
+  <g transform="translate(20,165)">
+    <rect x="0" y="0" width="560" height="220" fill="#fbfbfb" stroke="#333" stroke-width="2"/>
+    <!-- 鑽孔／攻牙 -->
+    <g fill="none" stroke="#1f77b4" stroke-width="1.5">
+      <circle cx="40" cy="40" r="6"/><circle cx="40" cy="180" r="6"/><circle cx="520" cy="40" r="6"/><circle cx="520" cy="180" r="6"/>
+      <circle cx="215" cy="192" r="5"/><circle cx="245" cy="192" r="5"/><circle cx="275" cy="192" r="5"/>
+    </g>
+    <!-- 沉孔 -->
+    <g fill="none" stroke="#1f77b4" stroke-width="1.5">
+      <circle cx="470" cy="110" r="5"/><circle cx="470" cy="110" r="10"/>
+      <circle cx="470" cy="150" r="5"/><circle cx="470" cy="150" r="10"/>
+    </g>
+    <!-- 大孔 -->
+    <circle cx="150" cy="60" r="22" fill="none" stroke="#9467bd" stroke-width="1.5"/>
+    <circle cx="150" cy="160" r="22" fill="none" stroke="#9467bd" stroke-width="1.5"/>
+    <!-- 窗口 -->
+    <path d="M210,50 h120 v20 h40 v-20 h50 v120 h-50 v-20 h-40 v20 h-120 z" fill="none" stroke="#9467bd" stroke-width="1.5" stroke-linejoin="round"/>
+    <!-- 長圓槽 -->
+    <rect x="360" y="20" width="60" height="18" rx="9" fill="none" stroke="#9467bd" stroke-width="1.5"/>
+    <rect x="360" y="182" width="60" height="18" rx="9" fill="none" stroke="#9467bd" stroke-width="1.5"/>
+    <!-- 標籤 -->
+    <g fill="#333">
+      <text x="52" y="44">鑽孔、攻牙</text>
+      <text x="290" y="211">攻牙 M4／M5／M6 依底孔徑判</text>
+      <text x="150" y="105" text-anchor="middle">大孔 Ø25↑</text>
+      <text x="150" y="121" text-anchor="middle" fill="#666">Ø8 螺旋分層銑穿</text>
+      <text x="290" y="120" text-anchor="middle">窗口</text>
+      <text x="290" y="136" text-anchor="middle" fill="#666">G41 輪廓分層切穿</text>
+      <text x="428" y="33">長圓槽</text>
+      <text x="486" y="103">沉孔</text>
+      <text x="486" y="164" fill="#666">同心兩圓</text>
+    </g>
+  </g>
+  <g fill="#333">
+    <text x="600" y="185">另外：</text>
+    <text x="600" y="205">・所有孔口與輪廓倒角 C0.5</text>
+    <text x="600" y="225">・公差孔留 0.6 給搪孔刀</text>
+    <text x="600" y="245">・輪廓內的小區域預設不切</text>
+    <text x="620" y="263" fill="#666">（可能是階梯，報告列待確認）</text>
+    <text x="600" y="300" font-weight="bold">不做：</text>
+    <text x="600" y="320">曲面、多面加工、有島的口袋</text>
+    <text x="600" y="355" font-weight="bold">只看幾何：</text>
+    <text x="600" y="375">孔徑＝圓半徑，比例＝板寬÷圖上外形</text>
+    <text x="600" y="395">深度、公差等文字讀不到 → 看報告核對</text>
+  </g>
+</svg>
