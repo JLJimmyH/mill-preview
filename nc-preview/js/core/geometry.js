@@ -14,6 +14,7 @@
 
   const U = NC.util;
   const EPS = 1e-6;          // 距離容差（mm）
+  const TANGENT_EPS = 2e-3;  // 補正接點視為相切的折角上限（rad）；見 applyCompensation 的 junction
   // R 指定圓弧的半徑誤差容許量（mm）：和 interpreter 用同一個值（Fanuc 參數 3410 等級，不是浮點容差）
   const ARC_R_TOL = (NC.interpreter && NC.interpreter.ARC_R_TOL > 0) ? NC.interpreter.ARC_R_TOL : 0.01;
   const ANG_EPS = 1e-7;      // 角度容差（rad）
@@ -670,7 +671,10 @@
       const t1 = tangentEnd(s1), t2 = tangentStart(s2);
       const cr = cross2(t1, t2), dt = dot2(t1, t2);
       const sgn = st.side === 'G41' ? 1 : -1;
-      if (Math.abs(cr) < 1e-6 && dt > 0) { joinLine(); return; } // 相切／共線
+      // 相切／共線。門檻 2e-3 rad（0.11°）：CAM 產出的圓弧接直線，座標取到小數三位後接點會留下
+      // 1e-4 rad 等級的折角（R2 弧的 I/J 差 0.0005 就是 2.5e-4 rad），用 1e-6 會把它們全判成內角、
+      // 交點又落在容差外 → 一整排假的 PS0041。0.11° 的折角當成相切，過切量 r(1−cosθ) < 1e-4 mm。
+      if (Math.abs(cr) < TANGENT_EPS && dt > 0) { joinLine(); return; }
       if (cr * sgn < 0 || (Math.abs(cr) < 1e-6 && dt < 0)) {
         // 外角：以程式轉角為圓心插入半徑 r 的弧
         if (len2(sub2(O2.a, O1.b)) <= EPS) return;

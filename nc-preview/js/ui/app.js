@@ -1863,9 +1863,30 @@
      * 開檔的總入口。同一個入口要接兩種東西：NC 程式與刀具表 CSV。
      * 先看副檔名，副檔名被改掉時再看第一列的欄名（現場的檔名常常沒有副檔名）。
      */
+    /**
+     * 素材檔（<名字>.stock.json，格式同 samples/<name>.stock.json：{spec, fixtures?}）拖進來就當成使用者設定的素材，
+     * 跟在素材頁手動填一樣：存 localStorage、換 O 號跟著搬。給 DWG→NC 這類外部產生器用，程式、刀具表、素材三個檔各自拖。
+     */
+    function importStockJSON(text, fileName) {
+      let o = null;
+      try { o = JSON.parse(String(text).replace(/^﻿/, '')); } catch (e) { setStatus('素材檔不是合法的 JSON：' + fileName); return false; }
+      const spec = (o && o.spec) ? o.spec : o;
+      let s = null;
+      try { s = NC.analysis.stockFromSpec(spec, (o && o.fixtures) || []); } catch (e) { s = null; }
+      if (!s || !s.spec) { setStatus('素材檔格式不對（要有 spec.shape／size／anchor）：' + fileName); return false; }
+      state.stock = s;
+      state.stockOrigin = 'user';
+      persistStock();
+      syncRotaryFromStock(s);
+      refresh();
+      setStatus('已套用素材 ' + fileName + '：' + P.logic.stockSummaryText(s));
+      return true;
+    }
+
     function openFile(file) {
       if (!file) return;
       readFile(file).then((r) => {
+        if (/\.stock\.json$/i.test(file.name)) { importStockJSON(r.text, file.name); return; }
         if (P.logic.looksLikeToolCSV(file.name, r.text)) { importToolCSV(r.text, file.name); return; }
         el.selSample.value = '';
         loadProgram(r.text, file.name, r.encoding);
