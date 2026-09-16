@@ -21,3 +21,11 @@ nc-preview/test/fixture-sim.js
 nc-preview/test/fixture-sim.json
 nc-preview/test/shot-*.png
 nc-preview/docs/proposals/
+
+# 本機測試用的第三方 WASM（libredwg-web，10 MB），不進版控；沒有這個資料夾時 DWG 匯入功能自動隱藏
+nc-preview/vendor/
+
+# 客戶圖檔與 DWG 轉檔工具的產出，一律不進版控
+*.dwg
+*.dxf
+tools/dwg2nc/out/

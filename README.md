@@ -50,6 +50,7 @@ Fanuc 立式綜合加工機（VMC）的 G-code 預演與檢錯工具。丟一支
 | [完整細節](nc-preview/docs/USAGE.md) | 操作細節、第四軸、完整的已知限制清單 |
 | [模組契約](nc-preview/docs/CONTRACT.md) | 架構與模組介面規範，改核心模組前先讀 |
 | [參與專案](CONTRIBUTING.md) | 回報問題、開發、送 PR |
+| [DWG 轉 NC](tools/dwg2nc/README.md) | 命令列工具：板件工程圖 → NC 程式＋刀具表＋素材，產出直接拖進預演台 |
 
 ## 開發
 
